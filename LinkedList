@@ -1,0 +1,705 @@
+Linked List :
+======================
+1. it is having nodes and saves the address of the next node
+2. it is having the fair advantage of insertion and deletion
+   when compared to Array List
+
+==========================
+
+Linked List : By the name itself it works on links
+
+Each node contains 2 fields one is 
+    1. data
+    2. next node address
+
+Different types of Linked List :
+================================
+
+1. Singly Linked List :
+     Here the direction of traversal is unidirectional but not bidirectional      
+2. Doubly Linked List 
+     Here the direction of traversal is bidirectional
+3. Circular Linked list 
+
+Code :
+class Node
+{
+    int data; //0
+    Node next; //null
+    
+  //  Student obj;
+    
+    Node(int data){
+        this.data=data;
+    }
+    
+}
+
+public class Main
+{
+	public static void main(String[] args) {
+	    Node head=null;
+	    Node temp=null;
+	   Node obj=new Node(100);
+	   
+	   if(head==null){
+	       head=obj; //Obj address should be copied to head
+	       temp=obj;
+	   }else{
+	       head.next=obj;
+	   }
+	   
+	   Node obj1=new Node(100);
+	   
+	    if(head==null){
+	       head=obj1; //Obj address should be copied to head
+	   }else{
+	       temp.next=obj1;
+	       temp=obj1
+	   }
+	   
+	   Node obj2=new Node(100);
+	   
+	    if(head==null){
+	       head=obj2; //Obj address should be copied to head
+	   }else{
+	       temp.next=obj2;
+	       temp=obj2
+	   }
+	   
+	}
+}
+======================================================================
+
+Today we are going to discuss 2 linked list operations
+
+1. formation of Linked list (Done)
+    Adding nodes to the Linked List
+2. Inserting an element in the linkedlist
+     -> insertion at the beginning
+     -> insertion at the middle
+     -> insertion at the end
+3. Deleting an element linked list
+    ->deleting an element in the beginning of the linked list
+    -> deleting an element in the middle
+    -> deleting last element of linked list
+4. Printing the nodes of the linked list
+================================================================
+Insewrtion :
+
+  Suppose if we want to insert an nth location you need to make n-2 iteration
+
+  after getting prev th node address then easily get next node address
+  temp=> if it is at the previous node
+  temp.next
+
+
+class Node
+{
+    int data; //0
+    Node next; //null
+    
+  //  Student obj;
+    
+    Node(int data){
+        this.data=data;
+    }
+    
+}
+
+public class Main
+{
+    static Node head=null;
+    static Node temp=null;
+    static void addNode(int x){
+        //
+        Node obj=new Node(x);
+        if(head==null){
+            head=obj;
+            temp=obj;
+        }else{
+            temp.next=obj;
+            temp=obj;
+        }
+       // System.out.println(temp+" ");
+        
+    }
+    static void insert(int pos,int number){
+        Node obj=new Node(number);
+        Node t=head;
+        for(int i=0;i<pos-2;i++){
+            t=t.next;
+        }
+        Node t1=t.next;
+        obj.next=t1;
+        t.next=obj;
+        
+    }
+    static void insertAtEnd(int number){
+        Node obj=new Node(number);
+        Node t=head;
+        while(t.next!=null){
+            t=t.next;
+        }
+        t.next=obj;
+    }
+    static void insertAtBegin(int number){
+        Node temp=head;
+        Node obj=new Node(number);
+         head=obj;
+        head.next=temp;
+    }
+    static void printing(){
+        Node t=head;
+        while(t!=null){
+            System.out.print(t.data+"->");
+            t=t.next;
+        }
+        System.out.println();
+    }
+	public static void main(String[] args) {
+	    addNode(10);
+	    addNode(20);
+	    addNode(30);
+	    addNode(40);
+	    addNode(50);
+	    printing();
+	   insertAtBegin(999);
+	     printing();
+	}
+}
+=================================================================================
+//Insertion at the end
+class Solution {
+    // Function to insert a node at the end of the linked list.
+    Node insertAtEnd(Node head, int x) {
+        // code here
+        Node obj=new Node(x);
+        Node temp=head;
+       if(head==null){
+           return obj;
+       }
+        while(temp.next!=null){
+            temp=temp.next;
+        }
+        temp.next=obj;
+        return head;
+    }
+}
+============================================================================
+//Searching an element in Linked list
+class Solution {
+    static boolean searchKey(int n, Node head, int key) {
+        // Code here
+        Node temp=head;
+        
+        while(temp!=null){
+            if(temp.data==key){
+                return true;
+            }
+            temp=temp.next;
+        }
+        return false;
+    }
+}
+====================================================================----------
+Kth from End of Linked List
+====================================
+//{ Driver Code Starts
+// Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int x) {
+        data = x;
+        next = null;
+    }
+}
+
+
+// } Driver Code Ends
+/* Structure of node
+class Node
+{
+    int data;
+    Node next;
+    Node(int d) {data = d; next = null; }
+} */
+
+class Solution {
+
+    // Function to find the data of kth node from
+    // the end of a linked list.
+    int getKthFromLast(Node head, int k) {
+        // Your code here
+         Node prev=null;
+        Node curr=head;
+        Node next=null;
+        Node temp1=head;
+        int count=0;
+        while(temp1!=null){
+            temp1=temp1.next;
+            count++;
+        }
+        if(k>count){
+            return -1;
+        }
+        while(curr!=null){
+           next=curr.next;
+           curr.next=prev;
+           prev=curr;
+           curr=next;
+        }
+         head= prev;
+        Node temp=head;
+        for(int i=0;i<k-1;i++){
+            temp=temp.next;
+        }
+        return temp.data;
+    }
+}
+
+
+//{ Driver Code Starts.
+
+public class GFG {
+    static void printList(Node node) {
+        while (node != null) {
+            System.out.print(node.data + " ");
+            node = node.next;
+        }
+        System.out.println();
+    }
+
+    ==================================================================
+
+
+
+Reverse a linked list
+-----------------------
+class Solution {
+    // Function to reverse a linked list.
+    Node reverseList(Node head) {
+        // code here
+        Node prev=null;
+        Node curr=head;
+        Node next=null;
+        while(curr!=null){
+           next=curr.next;
+           curr.next=prev;
+           prev=curr;
+           curr=next;
+        }
+        return prev;
+    }
+}
+=======================================
+Linked List Insertion At End
+=======================
+class Solution {
+    // Function to insert a node at the end of the linked list.
+    Node insertAtEnd(Node head, int x) {
+        // code here
+        Node obj=new Node(x);
+        Node temp=head;
+       if(head==null){
+           return obj;
+       }
+        while(temp.next!=null){
+            temp=temp.next;
+        }
+        temp.next=obj;
+        return head;
+    }
+}
+===================================
+Search in Linked List
+====================
+class Solution {
+    static boolean searchKey(int n, Node head, int key) {
+        // Code here
+        Node temp=head;
+        
+        while(temp!=null){
+            if(temp.data==key){
+                return true;
+            }
+            temp=temp.next;
+        }
+        return false;
+    }
+}
+====================================
+Count Linked List Nodes
+========================
+Count Linked List Nodes
+class Solution {
+    // Function to count nodes of a linked list.
+    public int getCount(Node head) {
+        // code here
+        Node temp=head;
+        int count=0;
+        while(temp!=null){
+            count++;
+            temp=temp.next;
+        }
+        return count;
+    }
+}
+=====================================
+Node at a given index in linked list
+
+class Solution {
+    public int GetNth(Node head, int index) {
+        // Code here
+        //if i want nth node how many iteration n-1
+        Node temp=head;
+        Node temp1=head;
+        int count=0;
+        while(temp1!=null){
+            temp1=temp1.next;
+            count++;
+        }
+        if(index>count){
+            return -1;
+        }
+        for(int i=0;i<index-1;i++){
+            temp=temp.next;
+        }
+        return temp.data;
+    }
+}
+===========================================
+Frequency in a Linked List
+
+class Solution {
+    public static int count(Node head, int key) {
+        // code here
+        Node temp=head;
+        int count=0;
+        while(temp!=null){
+            if(temp.data==key){
+                count++;
+            }
+            temp=temp.next;
+        }
+        return count;
+    }
+}
+================================================
+**Circular Linked List***
+https://www.geeksforgeeks.org/problems/circular-linked-list/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=practice_card
+class Solution {
+    boolean isCircular(Node head) {
+        // Your code here
+        if(head.next==null){
+            if(head.next==head){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        Node temp=head.next;
+        
+        while( temp.next!=null){
+            if(temp==head)
+            return true;
+            temp=temp.next;
+        }
+        return false;
+    }
+}
+===========================================================
+
+class Node
+{
+    int data; //0
+    Node next; //null
+
+    Node(int data){
+        this.data=data;
+    }
+    
+}
+
+public class Main
+{
+    static Node head=null;
+    static Node temp=null;
+    static void addNode(int x)
+   {
+        //
+        Node obj=new Node(x);
+        if(head==null){
+            head=obj;
+            temp=obj;
+        }else{
+            temp.next=obj;
+            temp=obj;
+        }
+       // System.out.println(temp+" ");
+        
+    }
+    static void insert(int pos,int number){
+        Node obj=new Node(number);
+        Node t=head;
+        for(int i=0;i<pos-2;i++){
+            t=t.next;
+        }
+        Node t1=t.next;
+        obj.next=t1; //right link
+        t.next=obj; //left link
+        
+    }
+    static void insertAtEnd(int number){
+        Node obj=new Node(number);
+        Node t=head;
+        while(t.next!=null){
+            t=t.next;
+        }
+        t.next=obj;
+    }
+    static void insertAtBegin(int number){
+        Node temp=head;
+        Node obj=new Node(number);
+         head=obj;
+        head.next=temp;
+
+     ================
+       obj.next =head;
+    }
+    static void printing(){
+        Node t=head;
+        while(t!=null){
+            System.out.print(t.data+"->");
+            t=t.next;
+        }
+        System.out.println();
+    }
+   
+     static void deleteatBegin(){
+         head=head.next;
+     }
+
+    static void deleteatEnd(){
+        Node temp=head;
+        Node prev=null;
+        while(temp.next!=null){
+            prev=temp;
+            temp=temp.next;
+        }
+        prev.next=null;
+    }
+    static void deleteatloc(int pos){
+        Node temp=head;
+        Node prev=null;
+        for(int i=0;i<pos-1;i++){
+            prev=temp;
+            temp=temp.next;
+        }
+        prev.next=temp.next;
+    }
+	public static void main(String[] args) {
+		System.out.println("Hello World");
+		
+		 addNode(10);
+	    addNode(20);
+	    addNode(30);
+	    addNode(40);
+	    addNode(50);
+	    printing();
+        deleteatloc(3);
+        printing();
+		
+		
+	}
+}
+=============================================================
+
+
+//Doubly Linked List
+class Solution {
+    public Node deleteNode(Node head, int x) {
+        // code here
+       if (head == null || x <= 0) {
+            return head; // No node to delete or invalid position
+        }
+ Node temp=head;
+       if(x==1){
+           temp.next.prev=null;
+           head=head.next;
+           return head;
+       }
+       // temp=head;
+        for(int i=0;i<x-1;i++){
+            temp=temp.next;
+        }
+        
+        if(temp==null){
+            return head;
+        }
+        
+        if(temp.prev!=null)
+        temp.prev.next=temp.next;
+        
+        if(temp.next!=null)
+        temp.next.prev=temp.prev;
+        
+        temp.prev=null;
+        temp.next=null;
+        return head;
+        
+    }
+}
+====================================================================
+// Function to check if the linked list has a loop.
+class Solution {
+    
+    public static boolean detectLoop(Node head) {
+        // Add code here
+        Node fast=head;
+        Node slow=head;
+        while(fast!=null && fast.next!=null){
+           
+            fast=fast.next.next;
+            slow=slow.next;
+             if(fast==slow){
+                return true;
+            }
+            
+        }
+        return false;
+    }
+}
+====================================================
+Count the length of the loop
+
+class Solution {
+    // Function to find the length of a loop in the linked list.
+    public int countNodesinLoop(Node head) {
+        // Add your code here.
+        Node fast=head;
+        Node slow=head;
+        while(fast!=null && fast.next!=null){
+            fast=fast.next.next;
+            slow=slow.next;
+            if(fast==slow){
+              return new Solution().countLength(fast);
+            }
+        }
+        return 0;
+    }
+    public int countLength(Node head){
+        Node temp=head.next;
+        int count=1;
+        while(temp!=head){
+            count++;
+            temp=temp.next;
+            
+        }
+        return count;
+    }
+}
+======================================================
+=============================================================
+
+https://www.geeksforgeeks.org/problems/remove-loop-in-linked-list/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=practice_card
+//break the loop
+
+class Solution {
+    // Function to remove a loop in the linked list.
+    public static void removeLoop(Node head) {
+        // code here
+        // remove the loop without losing any nodes
+        Node fast=head;
+        Node slow= head;
+        while(fast!=null && fast.next!=null){
+            fast=fast.next.next;
+            slow=slow.next;
+            if(fast==slow){
+                breaktheloop(fast,head);
+                break;
+            }
+        }
+    }
+    static void breaktheloop(Node fast,Node head){
+        Node slow=head;
+        
+        if(slow==fast){
+            while(fast.next!=slow){
+                fast=fast.next;
+            }
+            fast.next=null;
+            return;
+        }
+        while(fast.next!=slow.next){
+            fast=fast.next;
+            slow=slow.next;
+        }
+        fast.next=null;
+    }
+}
+==================================================
+class Solution {
+    // Function to reverse a circular linked list
+    Node reverse(Node head) 
+    {
+         if (head == null || head.next == head) return head; 
+
+        // code here
+         if (head == null || head.next == head) return head; 
+
+            // Find the last node to break the circular reference
+            Node prev = null;
+            Node curr = head;
+            Node next = null;
+        
+            // Reverse the list while keeping track of the last node
+            do {
+                next = curr.next; //first we are updating next
+                curr.next = prev; //Reverse the direction of the current
+                prev = curr; //Update prev to curr
+                curr = next; //update curr to next
+            } while (curr != head);
+        
+            // Link the last node to the new head
+            head.next = prev;
+        
+            return prev; // Return the new head of the reversed list
+    }
+=====================================================================
+    // Function to delete a node from the circular linked list
+    Node deleteNode(Node head, int key) {
+        // code here
+        
+        Node curr=head.next;
+        Node prev=head;
+        if(head.data==key){
+            while(curr.next!=head){
+                curr=curr.next;
+            }
+            curr.next=head.next;
+            return head.next;
+        }else{
+            while(curr!=head){
+               
+                if(key==curr.data){
+                    prev.next=curr.next;
+                    break;
+                }
+                 prev=curr;
+                curr=curr.next;
+                
+            }
+            return head;
+        }        
+    }
+}
+=============================================================================
+
+
